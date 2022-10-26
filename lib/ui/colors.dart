@@ -13,4 +13,6 @@ class AppColors {
 
   /// Black 25% opacity
   static const Color black25 = Color(0x40202124);
+
+  static const Color red = Color(0xffe83f5b);
 }
