@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:save_pass/src/view/home/home_page.dart';
 import 'package:save_pass/src/view/login/login_page.dart';
 import 'package:save_pass/src/view/splash/splash_page.dart';
 import 'package:save_pass/ui/colors.dart';
@@ -19,6 +20,7 @@ class App extends StatelessWidget {
       home: const SplashPage(),
       routes: {
         '/login': (context) => const LoginPage(),
+        '/home': (context) => const HomePage(),
       },
     );
   }
