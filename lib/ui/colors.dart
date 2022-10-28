@@ -5,7 +5,7 @@ class AppColors {
   static const Color black900 = Color(0xff121214);
   static const Color black800 = Color(0xff1e1e22);
   static const Color gray200 = Color(0xffc1c1c4);
-  static const Color gray500 = Color(0xff44444d);
+  static const Color gray500 = Color(0xff7a7a80);
   static const Color primary = Color(0xff8257e6);
 
   /// Black 54% opacity
