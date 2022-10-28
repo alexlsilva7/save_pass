@@ -1,0 +1,50 @@
+import 'package:flutter/material.dart';
+import 'package:save_pass/ui/colors.dart';
+import 'package:save_pass/ui/components/custom_text_field.dart';
+
+class SearchTextField extends StatelessWidget {
+  const SearchTextField({
+    super.key,
+    required this.hintText,
+    required this.controller,
+  });
+
+  final String hintText;
+  final TextEditingController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: CustomTextField(
+            hintText: hintText,
+            controller: controller,
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(4),
+              bottomLeft: Radius.circular(4),
+            ),
+          ),
+        ),
+        Container(
+          decoration: const BoxDecoration(
+            color: Colors.amber,
+            borderRadius: BorderRadius.only(
+              topRight: Radius.circular(4),
+              bottomRight: Radius.circular(4),
+            ),
+          ),
+          height: 56,
+          child: IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.search,
+              color: AppColors.black900,
+              size: 24,
+            ),
+          ),
+        )
+      ],
+    );
+  }
+}
