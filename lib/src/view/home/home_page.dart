@@ -118,7 +118,7 @@ class _HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Suas Senhas',
+                      'Suas senhas',
                       style: AppTextStyle.headline5,
                     ),
                     Text('03 ao total',
