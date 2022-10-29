@@ -14,37 +14,40 @@ class SearchTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: CustomTextField(
-            hintText: hintText,
-            controller: controller,
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(4),
-              bottomLeft: Radius.circular(4),
+    return SizedBox(
+      height: 62,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            child: CustomTextField(
+              hintText: hintText,
+              controller: controller,
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(4),
+                bottomLeft: Radius.circular(4),
+              ),
             ),
           ),
-        ),
-        Container(
-          decoration: const BoxDecoration(
-            color: Colors.amber,
-            borderRadius: BorderRadius.only(
-              topRight: Radius.circular(4),
-              bottomRight: Radius.circular(4),
+          Container(
+            decoration: const BoxDecoration(
+              color: Colors.amber,
+              borderRadius: BorderRadius.only(
+                topRight: Radius.circular(4),
+                bottomRight: Radius.circular(4),
+              ),
             ),
-          ),
-          height: 56,
-          child: IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.search,
-              color: AppColors.black900,
-              size: 24,
+            child: IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.search,
+                color: AppColors.black900,
+                size: 24,
+              ),
             ),
-          ),
-        )
-      ],
+          )
+        ],
+      ),
     );
   }
 }
