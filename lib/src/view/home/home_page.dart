@@ -87,7 +87,9 @@ class _HomePageState extends State<HomePage> {
             height: 48,
             child: IconButton(
               icon: const Icon(Icons.add, color: AppColors.white),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, '/new_password');
+              },
             ),
           ),
         ],
