@@ -22,6 +22,7 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 62,
       decoration: BoxDecoration(
         color: AppColors.black800,
         borderRadius: borderRadius,
@@ -32,7 +33,7 @@ class CustomTextField extends StatelessWidget {
         controller: controller,
         obscureText: obscureText,
         decoration: InputDecoration(
-          suffix: suffix,
+          suffixIcon: suffix,
           hintText: hintText,
           hintStyle: AppTextStyle.bodyText1.copyWith(color: AppColors.gray500),
           border: const OutlineInputBorder(),
