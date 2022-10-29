@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:save_pass/src/view/login/login_button.dart';
 import 'package:save_pass/src/view/login/login_text_field.dart';
+import 'package:save_pass/ui/components/app_button.dart';
 import 'package:save_pass/ui/font_weights.dart';
 import 'package:save_pass/ui/text_styles.dart';
 
@@ -59,10 +59,11 @@ class _LoginPageState extends State<LoginPage> {
               controller: _passwordController,
             ),
             const SizedBox(height: 16),
-            LoginButton(
+            AppButton(
               onPressed: () {
                 Navigator.of(context).pushReplacementNamed('/home');
               },
+              text: 'Entrar',
             )
           ],
         ),

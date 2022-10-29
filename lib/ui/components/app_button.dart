@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:save_pass/ui/colors.dart';
 import 'package:save_pass/ui/text_styles.dart';
 
-class LoginButton extends StatelessWidget {
-  const LoginButton(
+class AppButton extends StatelessWidget {
+  const AppButton(
       {super.key, required this.onPressed, this.text = 'Fazer login'});
 
   final String text;
@@ -22,7 +22,7 @@ class LoginButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(8),
           ),
         ),
-        child: Text('Fazer Login', style: AppTextStyle.button),
+        child: Text(text, style: AppTextStyle.button),
       ),
     );
   }
