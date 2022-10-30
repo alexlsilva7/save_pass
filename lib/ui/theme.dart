@@ -10,10 +10,8 @@ class AppTheme {
   /// Dark `ThemeData` for App UI.
   static ThemeData get dark {
     return ThemeData(
-      colorScheme: ColorScheme.fromSwatch(
-        accentColor: AppColors.primary,
-        brightness: Brightness.dark,
-      ),
+      primaryColor: AppColors.primary,
+      scaffoldBackgroundColor: AppColors.black900,
       appBarTheme: _appBarTheme,
       elevatedButtonTheme: _elevatedButtonTheme,
       outlinedButtonTheme: _outlinedButtonTheme,
@@ -24,6 +22,7 @@ class AppTheme {
       bottomSheetTheme: _bottomSheetTheme,
       tabBarTheme: _tabBarTheme,
       dividerTheme: _dividerTheme,
+      useMaterial3: true,
     );
   }
 
