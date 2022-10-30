@@ -37,16 +37,22 @@ class _PasswordListTileState extends State<PasswordListTile> {
           });
         },
       ),
-      title: Text('Plataforma Rocketseat',
-          style: AppTextStyle.bodyText2.copyWith(
-            color: isPassowrdVisible ? AppColors.gray200 : AppColors.white,
-            fontSize: isPassowrdVisible ? 14 : 16,
-          )),
-      subtitle: Text(
-        isPassowrdVisible ? password : username,
+      title: AnimatedDefaultTextStyle(
+        style: AppTextStyle.bodyText2.copyWith(
+          color: isPassowrdVisible ? AppColors.gray200 : AppColors.white,
+          fontSize: isPassowrdVisible ? 14 : 16,
+        ),
+        duration: const Duration(milliseconds: 300),
+        child: const Text('Plataforma Rocketseat'),
+      ),
+      subtitle: AnimatedDefaultTextStyle(
         style: AppTextStyle.subtitle2.copyWith(
           color: isPassowrdVisible ? AppColors.primary : AppColors.gray500,
           fontSize: isPassowrdVisible ? 16 : 14,
+        ),
+        duration: const Duration(milliseconds: 300),
+        child: Text(
+          isPassowrdVisible ? password : username,
         ),
       ),
     );

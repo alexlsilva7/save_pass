@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:save_pass/src/model/password_model.dart';
+import 'package:provider/provider.dart';
+import 'package:save_pass/src/controller/sqlite_password_controller.dart';
 import 'package:save_pass/src/view/home/password_list_tile.dart';
 import 'package:save_pass/src/view/home/search_text_field.dart';
 import 'package:save_pass/ui/colors.dart';
@@ -62,18 +63,14 @@ class _HomePageState extends State<HomePage> {
                   Text.rich(
                     TextSpan(
                       text: 'Olá, ',
-                      style: AppTextStyle.headline3,
+                      style: AppTextStyle.headline5,
                       children: [
                         TextSpan(
-                          text: 'Alex Lopes',
-                          style: AppTextStyle.headline3.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                            text: 'Alex Lopes', style: AppTextStyle.headline4),
                       ],
                     ),
                   ),
-                  Text('Sinta-se seguro aqui', style: AppTextStyle.bodyText2),
+                  Text('Sinta-se seguro aqui', style: AppTextStyle.subtitle2),
                 ],
               ),
             ],
@@ -103,59 +100,59 @@ class _HomePageState extends State<HomePage> {
       body: Stack(
         children: [
           background(),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 48),
-                header(context),
-                const SizedBox(height: 24),
-                SearchTextField(
-                  hintText: 'Qual senha você procura?',
-                  controller: _searchController,
-                ),
-                const SizedBox(height: 24),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Suas senhas',
-                      style: AppTextStyle.headline5,
-                    ),
-                    Text('03 ao total',
-                        style: AppTextStyle.bodyText2.copyWith(
-                          color: AppColors.gray500,
-                        )),
-                  ],
-                ),
-                const SizedBox(height: 16),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: 10,
-                    itemBuilder: (context, index) {
-                      return Container(
-                        margin: const EdgeInsets.only(bottom: 8),
-                        decoration: const BoxDecoration(
-                          color: AppColors.black800,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(4),
-                          ),
-                        ),
-                        child: PasswordListTile(
-                          passwordService: PasswordModel(
-                            serviceName: 'Facebook',
-                            username: 'alexlopes',
-                            password: '123456',
-                          ),
-                        ),
-                      );
-                    },
+          Consumer<SQlitePasswordController>(
+              builder: (context, SQlitePasswordController controller, _) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 48),
+                  header(context),
+                  const SizedBox(height: 24),
+                  SearchTextField(
+                    hintText: 'Qual senha você procura?',
+                    controller: _searchController,
                   ),
-                ),
-              ],
-            ),
-          )
+                  const SizedBox(height: 24),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Suas senhas',
+                        style: AppTextStyle.headline5,
+                      ),
+                      Text('${controller.passwords.length} senhas',
+                          style: AppTextStyle.bodyText2.copyWith(
+                            color: AppColors.gray500,
+                          )),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  Expanded(
+                    child: ListView.builder(
+                      padding: EdgeInsets.zero,
+                      itemCount: controller.passwords.length,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          margin: const EdgeInsets.only(bottom: 8),
+                          decoration: const BoxDecoration(
+                            color: AppColors.black800,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(4),
+                            ),
+                          ),
+                          child: PasswordListTile(
+                            passwordService: controller.passwords[index],
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            );
+          })
         ],
       ),
     );
