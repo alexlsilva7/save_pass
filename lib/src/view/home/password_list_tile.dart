@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:save_pass/src/model/password_service.dart';
+import 'package:save_pass/src/model/password_model.dart';
 import 'package:save_pass/ui/colors.dart';
 import 'package:save_pass/ui/text_styles.dart';
 
 class PasswordListTile extends StatefulWidget {
   const PasswordListTile({super.key, required this.passwordService});
 
-  final PasswordService passwordService;
+  final PasswordModel passwordService;
   @override
   State<PasswordListTile> createState() => _PasswordListTileState();
 }

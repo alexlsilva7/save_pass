@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:save_pass/src/model/password_service.dart';
+import 'package:save_pass/src/model/password_model.dart';
 import 'package:save_pass/src/view/home/password_list_tile.dart';
 import 'package:save_pass/src/view/home/search_text_field.dart';
 import 'package:save_pass/ui/colors.dart';
@@ -143,7 +143,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                         child: PasswordListTile(
-                          passwordService: PasswordService(
+                          passwordService: PasswordModel(
                             serviceName: 'Facebook',
                             username: 'alexlopes',
                             password: '123456',
