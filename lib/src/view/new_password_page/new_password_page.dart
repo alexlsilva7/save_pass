@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:save_pass/src/controller/sqlite_password_controller.dart';
+import 'package:save_pass/src/model/password_model.dart';
 import 'package:save_pass/ui/colors.dart';
 import 'package:save_pass/ui/components/app_button.dart';
 import 'package:save_pass/ui/components/custom_text_field.dart';
 import 'package:save_pass/ui/text_styles.dart';
+import 'package:provider/provider.dart';
 
 class NewPasswordPage extends StatefulWidget {
   const NewPasswordPage({super.key});
@@ -22,7 +25,6 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColors.primary,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios),
           onPressed: () => Navigator.pop(context),
@@ -79,7 +81,30 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
             ),
             const SizedBox(height: 12),
             AppButton(
-              onPressed: () {},
+              onPressed: () async {
+                String serviceName = _nameController.text;
+                String username = _usernameController.text;
+                String password = _passwordController.text;
+
+                if (serviceName.isEmpty ||
+                    username.isEmpty ||
+                    password.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Preencha todos os campos'),
+                    ),
+                  );
+                } else {
+                  await context.read<SQlitePasswordController>().addPassword(
+                        PasswordModel(
+                            serviceName: serviceName,
+                            username: username,
+                            password: password),
+                      );
+                  if (!mounted) return;
+                  Navigator.pop(context);
+                }
+              },
               text: 'Salvar',
             )
           ],
