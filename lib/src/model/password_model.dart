@@ -9,4 +9,16 @@ class PasswordModel {
   String serviceName;
   String username;
   String password;
+
+  factory PasswordModel.fromJson(Map<String, dynamic> json) => PasswordModel(
+        serviceName: json["service_name"],
+        username: json["username"],
+        password: json["password"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "service_name": serviceName,
+        "username": username,
+        "password": password,
+      };
 }
