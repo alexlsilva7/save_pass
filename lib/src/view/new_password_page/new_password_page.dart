@@ -32,82 +32,84 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
         title: const Text('Cadastro de Senha'),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(32.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 12),
-            Text(
-              'Nome do serviço',
-              style: AppTextStyle.bodyText1,
-            ),
-            const SizedBox(height: 12),
-            CustomTextField(
-              hintText: 'Nome do serviço',
-              controller: _nameController,
-            ),
-            const SizedBox(height: 12),
-            Text(
-              'Email ou usuário',
-              style: AppTextStyle.bodyText1,
-            ),
-            const SizedBox(height: 12),
-            CustomTextField(
-              hintText: 'Email ou usuário',
-              controller: _usernameController,
-            ),
-            const SizedBox(height: 12),
-            Text(
-              'Senha',
-              style: AppTextStyle.bodyText1,
-            ),
-            const SizedBox(height: 12),
-            CustomTextField(
-              hintText: 'Senha',
-              obscureText: _isObscure,
-              controller: _passwordController,
-              suffix: GestureDetector(
-                child: Icon(
-                  _isObscure ? Icons.visibility_off : Icons.visibility,
-                  color: AppColors.gray200,
-                ),
-                onTap: () {
-                  setState(() {
-                    _isObscure = !_isObscure;
-                  });
-                },
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(32.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 12),
+              Text(
+                'Nome do serviço',
+                style: AppTextStyle.bodyText1,
               ),
-            ),
-            const SizedBox(height: 12),
-            AppButton(
-              onPressed: () async {
-                String serviceName = _nameController.text;
-                String username = _usernameController.text;
-                String password = _passwordController.text;
+              const SizedBox(height: 12),
+              CustomTextField(
+                hintText: 'Nome do serviço',
+                controller: _nameController,
+              ),
+              const SizedBox(height: 12),
+              Text(
+                'Email ou usuário',
+                style: AppTextStyle.bodyText1,
+              ),
+              const SizedBox(height: 12),
+              CustomTextField(
+                hintText: 'Email ou usuário',
+                controller: _usernameController,
+              ),
+              const SizedBox(height: 12),
+              Text(
+                'Senha',
+                style: AppTextStyle.bodyText1,
+              ),
+              const SizedBox(height: 12),
+              CustomTextField(
+                hintText: 'Senha',
+                obscureText: _isObscure,
+                controller: _passwordController,
+                suffix: GestureDetector(
+                  child: Icon(
+                    _isObscure ? Icons.visibility_off : Icons.visibility,
+                    color: AppColors.gray200,
+                  ),
+                  onTap: () {
+                    setState(() {
+                      _isObscure = !_isObscure;
+                    });
+                  },
+                ),
+              ),
+              const SizedBox(height: 12),
+              AppButton(
+                onPressed: () async {
+                  String serviceName = _nameController.text;
+                  String username = _usernameController.text;
+                  String password = _passwordController.text;
 
-                if (serviceName.isEmpty ||
-                    username.isEmpty ||
-                    password.isEmpty) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Preencha todos os campos'),
-                    ),
-                  );
-                } else {
-                  await context.read<SQlitePasswordController>().addPassword(
-                        PasswordModel(
-                            serviceName: serviceName,
-                            username: username,
-                            password: password),
-                      );
-                  if (!mounted) return;
-                  Navigator.pop(context);
-                }
-              },
-              text: 'Salvar',
-            )
-          ],
+                  if (serviceName.isEmpty ||
+                      username.isEmpty ||
+                      password.isEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Preencha todos os campos'),
+                      ),
+                    );
+                  } else {
+                    await context.read<SQlitePasswordController>().addPassword(
+                          PasswordModel(
+                              serviceName: serviceName,
+                              username: username,
+                              password: password),
+                        );
+                    if (!mounted) return;
+                    Navigator.pop(context);
+                  }
+                },
+                text: 'Salvar',
+              )
+            ],
+          ),
         ),
       ),
     );
