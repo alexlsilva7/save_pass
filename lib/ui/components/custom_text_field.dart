@@ -11,6 +11,7 @@ class CustomTextField extends StatelessWidget {
     this.suffix,
     required this.controller,
     this.borderRadius = const BorderRadius.all(Radius.circular(8)),
+    this.onChanged,
   });
 
   final String hintText;
@@ -18,6 +19,7 @@ class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final Widget? suffix;
   final BorderRadius borderRadius;
+  final void Function(String)? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +41,7 @@ class CustomTextField extends StatelessWidget {
           border: const OutlineInputBorder(),
           focusedBorder: const OutlineInputBorder(),
         ),
+        onChanged: onChanged,
       ),
     );
   }

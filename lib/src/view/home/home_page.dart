@@ -113,6 +113,11 @@ class _HomePageState extends State<HomePage> {
                   SearchTextField(
                     hintText: 'Qual senha você procura?',
                     controller: _searchController,
+                    onChanged: (value) {
+                      setState(() {
+                        controller.search(value);
+                      });
+                    },
                   ),
                   const SizedBox(height: 24),
                   Row(
@@ -130,15 +135,26 @@ class _HomePageState extends State<HomePage> {
                   ),
                   const SizedBox(height: 16),
                   Expanded(
-                    child: ListView.builder(
-                      padding: EdgeInsets.zero,
-                      itemCount: controller.passwords.length,
-                      itemBuilder: (context, index) {
-                        return PasswordListTile(
-                          passwordService: controller.passwords[index],
-                        );
-                      },
-                    ),
+                    child: _searchController.text.isNotEmpty
+                        ? ListView.builder(
+                            padding: EdgeInsets.zero,
+                            itemCount: controller.filteredPasswords.length,
+                            itemBuilder: (context, index) {
+                              return PasswordListTile(
+                                passwordService:
+                                    controller.filteredPasswords[index],
+                              );
+                            },
+                          )
+                        : ListView.builder(
+                            padding: EdgeInsets.zero,
+                            itemCount: controller.passwords.length,
+                            itemBuilder: (context, index) {
+                              return PasswordListTile(
+                                passwordService: controller.passwords[index],
+                              );
+                            },
+                          ),
                   ),
                 ],
               ),

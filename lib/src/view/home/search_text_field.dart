@@ -7,10 +7,12 @@ class SearchTextField extends StatelessWidget {
     super.key,
     required this.hintText,
     required this.controller,
+    required this.onChanged,
   });
 
   final String hintText;
   final TextEditingController controller;
+  final void Function(String) onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +29,7 @@ class SearchTextField extends StatelessWidget {
                 topLeft: Radius.circular(4),
                 bottomLeft: Radius.circular(4),
               ),
+              onChanged: onChanged,
             ),
           ),
           Container(

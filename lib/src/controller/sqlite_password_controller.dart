@@ -5,6 +5,7 @@ import 'package:save_pass/src/model/repository/sqlite_password_respository.dart'
 class SQlitePasswordController extends ChangeNotifier {
   late final SQlitePasswordRepository _passwordRepository;
   final List<PasswordModel> _passwords = [];
+  List<PasswordModel> filteredPasswords = [];
 
   SQlitePasswordController() {
     SQlitePasswordRepository.open().then((database) {
@@ -52,5 +53,14 @@ class SQlitePasswordController extends ChangeNotifier {
     } else {
       return null;
     }
+  }
+
+  void search(String serviceName) {
+    filteredPasswords = _passwords
+        .where((password) => password.serviceName
+            .toLowerCase()
+            .contains(serviceName.toLowerCase()))
+        .toList();
+    notifyListeners();
   }
 }
