@@ -15,11 +15,13 @@ class _PasswordListTileState extends State<PasswordListTile> {
   bool isPasswordVisible = false;
   late final String username;
   late final String password;
+  late final String service;
 
   @override
   void initState() {
     username = widget.passwordService.username;
     password = widget.passwordService.password;
+    service = widget.passwordService.serviceName;
     super.initState();
   }
 
@@ -58,12 +60,12 @@ class _PasswordListTileState extends State<PasswordListTile> {
               },
             ),
             title: AnimatedDefaultTextStyle(
-              style: AppTextStyle.bodyText2.copyWith(
+              style: AppTextStyle.bodyText1.copyWith(
                 color: isPasswordVisible ? AppColors.gray200 : AppColors.white,
                 fontSize: isPasswordVisible ? 14 : 16,
               ),
               duration: const Duration(milliseconds: 300),
-              child: const Text('Plataforma Rocketseat'),
+              child: Text(service),
             ),
             subtitle: AnimatedDefaultTextStyle(
               style: AppTextStyle.subtitle2.copyWith(
