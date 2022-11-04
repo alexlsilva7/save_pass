@@ -134,17 +134,8 @@ class _HomePageState extends State<HomePage> {
                       padding: EdgeInsets.zero,
                       itemCount: controller.passwords.length,
                       itemBuilder: (context, index) {
-                        return Container(
-                          margin: const EdgeInsets.only(bottom: 8),
-                          decoration: const BoxDecoration(
-                            color: AppColors.black800,
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(4),
-                            ),
-                          ),
-                          child: PasswordListTile(
-                            passwordService: controller.passwords[index],
-                          ),
+                        return PasswordListTile(
+                          passwordService: controller.passwords[index],
                         );
                       },
                     ),

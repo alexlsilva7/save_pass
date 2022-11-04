@@ -12,7 +12,7 @@ class PasswordListTile extends StatefulWidget {
 }
 
 class _PasswordListTileState extends State<PasswordListTile> {
-  bool isPassowrdVisible = false;
+  bool isPasswordVisible = false;
   late final String username;
   late final String password;
 
@@ -25,36 +25,61 @@ class _PasswordListTileState extends State<PasswordListTile> {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: IconButton(
-        icon: Icon(
-          isPassowrdVisible ? Icons.visibility : Icons.visibility_off,
-          color: isPassowrdVisible ? AppColors.primary : AppColors.gray500,
+    return Column(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            color: isPasswordVisible ? null : AppColors.black800,
+            gradient: isPasswordVisible
+                ? LinearGradient(
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                    colors: [
+                      AppColors.primary.withOpacity(0.2),
+                      AppColors.black800,
+                    ],
+                  )
+                : null,
+            borderRadius: const BorderRadius.all(
+              Radius.circular(4),
+            ),
+          ),
+          child: ListTile(
+            leading: IconButton(
+              icon: Icon(
+                isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                color:
+                    isPasswordVisible ? AppColors.primary : AppColors.gray500,
+              ),
+              onPressed: () {
+                setState(() {
+                  isPasswordVisible = !isPasswordVisible;
+                });
+              },
+            ),
+            title: AnimatedDefaultTextStyle(
+              style: AppTextStyle.bodyText2.copyWith(
+                color: isPasswordVisible ? AppColors.gray200 : AppColors.white,
+                fontSize: isPasswordVisible ? 14 : 16,
+              ),
+              duration: const Duration(milliseconds: 300),
+              child: const Text('Plataforma Rocketseat'),
+            ),
+            subtitle: AnimatedDefaultTextStyle(
+              style: AppTextStyle.subtitle2.copyWith(
+                color:
+                    isPasswordVisible ? AppColors.primary : AppColors.gray500,
+                fontSize: isPasswordVisible ? 16 : 14,
+              ),
+              duration: const Duration(milliseconds: 300),
+              child: Text(
+                isPasswordVisible ? password : username,
+              ),
+            ),
+          ),
         ),
-        onPressed: () {
-          setState(() {
-            isPassowrdVisible = !isPassowrdVisible;
-          });
-        },
-      ),
-      title: AnimatedDefaultTextStyle(
-        style: AppTextStyle.bodyText2.copyWith(
-          color: isPassowrdVisible ? AppColors.gray200 : AppColors.white,
-          fontSize: isPassowrdVisible ? 14 : 16,
-        ),
-        duration: const Duration(milliseconds: 300),
-        child: const Text('Plataforma Rocketseat'),
-      ),
-      subtitle: AnimatedDefaultTextStyle(
-        style: AppTextStyle.subtitle2.copyWith(
-          color: isPassowrdVisible ? AppColors.primary : AppColors.gray500,
-          fontSize: isPassowrdVisible ? 16 : 14,
-        ),
-        duration: const Duration(milliseconds: 300),
-        child: Text(
-          isPassowrdVisible ? password : username,
-        ),
-      ),
+        const SizedBox(height: 8),
+      ],
     );
   }
 }
