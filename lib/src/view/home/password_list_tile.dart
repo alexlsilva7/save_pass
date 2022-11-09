@@ -7,9 +7,9 @@ import 'package:save_pass/ui/text_styles.dart';
 import 'package:provider/provider.dart';
 
 class PasswordListTile extends StatefulWidget {
-  const PasswordListTile({super.key, required this.passwordService});
+  PasswordListTile({super.key, required this.passwordService});
 
-  final PasswordModel passwordService;
+  PasswordModel passwordService;
   @override
   State<PasswordListTile> createState() => _PasswordListTileState();
 }
@@ -35,14 +35,27 @@ class _PasswordListTileState extends State<PasswordListTile> {
         SwipeActionCell(
           key: ValueKey(username + service),
           closeWhenScrolling: true,
-          leadingActions: const [
-            // SwipeAction(
-            //   title: 'Edit',
-            //   color: Colors.amber,
-            //   onTap: (handler) async {
-            //     handler(false); // To close the cell
-            //   },
-            // ),
+          leadingActions: [
+            SwipeAction(
+              title: 'Edit',
+              color: Colors.amber,
+              onTap: (handler) async {
+                await handler(false); // To close the cell
+                Navigator.pushNamed(context, '/new_password',
+                        arguments: widget.passwordService)
+                    .then((value) {
+                  if (value != null) {
+                    final newPassword = value as PasswordModel;
+                    setState(() {
+                      username = newPassword.username;
+                      password = newPassword.password;
+                      service = newPassword.serviceName;
+                      widget.passwordService = newPassword;
+                    });
+                  }
+                });
+              },
+            ),
           ],
           trailingActions: <SwipeAction>[
             SwipeAction(

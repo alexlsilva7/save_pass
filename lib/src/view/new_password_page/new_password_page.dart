@@ -8,7 +8,9 @@ import 'package:save_pass/ui/text_styles.dart';
 import 'package:provider/provider.dart';
 
 class NewPasswordPage extends StatefulWidget {
-  const NewPasswordPage({super.key});
+  const NewPasswordPage({super.key, this.passwordModel});
+
+  final PasswordModel? passwordModel;
 
   @override
   State<NewPasswordPage> createState() => _NewPasswordPageState();
@@ -20,6 +22,27 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
   final TextEditingController _passwordController = TextEditingController();
 
   bool _isObscure = true;
+
+  bool isEdit = false;
+
+  @override
+  void initState() {
+    isEdit = widget.passwordModel != null;
+    if (isEdit) {
+      _nameController.text = widget.passwordModel?.serviceName ?? '';
+      _usernameController.text = widget.passwordModel?.username ?? '';
+      _passwordController.text = widget.passwordModel?.password ?? '';
+    }
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _usernameController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,17 +119,25 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                       ),
                     );
                   } else {
-                    await context.read<SQlitePasswordController>().addPassword(
-                          PasswordModel(
-                              serviceName: serviceName,
-                              username: username,
-                              password: password),
-                        );
+                    final newPassword = PasswordModel(
+                      serviceName: serviceName,
+                      username: username,
+                      password: password,
+                    );
+                    if (isEdit) {
+                      await context
+                          .read<SQlitePasswordController>()
+                          .updatePassword(newPassword);
+                    } else {
+                      await context
+                          .read<SQlitePasswordController>()
+                          .addPassword(newPassword);
+                    }
                     if (!mounted) return;
-                    Navigator.pop(context);
+                    Navigator.pop(context, isEdit ? newPassword : null);
                   }
                 },
-                text: 'Salvar',
+                text: isEdit ? 'Editar' : 'Salvar',
               )
             ],
           ),

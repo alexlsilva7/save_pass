@@ -2,6 +2,7 @@ import 'package:device_preview_screenshot/device_preview_screenshot.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:save_pass/src/controller/sqlite_password_controller.dart';
+import 'package:save_pass/src/model/password_model.dart';
 import 'package:save_pass/src/view/home/home_page.dart';
 import 'package:save_pass/src/view/login/login_page.dart';
 import 'package:save_pass/src/view/new_password_page/new_password_page.dart';
@@ -37,10 +38,29 @@ class App extends StatelessWidget {
               builder: DevicePreview.appBuilder,
               theme: AppTheme.dark,
               home: const SplashPage(),
-              routes: {
-                '/login': (context) => const LoginPage(),
-                '/home': (context) => const HomePage(),
-                '/new_password': (context) => const NewPasswordPage(),
+              onGenerateRoute: (settings) {
+                switch (settings.name) {
+                  case '/home':
+                    return MaterialPageRoute(
+                      builder: (context) => const HomePage(),
+                    );
+                  case '/new_password':
+                    return MaterialPageRoute(
+                      builder: (context) => NewPasswordPage(
+                        passwordModel: settings.arguments != null
+                            ? settings.arguments as PasswordModel
+                            : null,
+                      ),
+                    );
+                  case '/login':
+                    return MaterialPageRoute(
+                      builder: (context) => const LoginPage(),
+                    );
+                  default:
+                    return MaterialPageRoute(
+                      builder: (context) => const SplashPage(),
+                    );
+                }
               },
             );
           }),

@@ -39,7 +39,9 @@ class SQlitePasswordController extends ChangeNotifier {
   }
 
   Future<void> updatePassword(PasswordModel password) async {
-    await _passwordRepository.savePassword(password);
+    await _passwordRepository.updatePassword(password);
+    _passwords.removeWhere((p) => p.serviceName == password.serviceName);
+    _passwords.add(password);
     notifyListeners();
   }
 

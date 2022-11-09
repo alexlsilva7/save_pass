@@ -39,6 +39,15 @@ class SQlitePasswordRepository implements IPasswordRepository {
     );
   }
 
+  Future<void> updatePassword(PasswordModel password) async {
+    await database.update(
+      'passwords',
+      password.toJson(),
+      where: 'service_name = ?',
+      whereArgs: [password.serviceName],
+    );
+  }
+
   @override
   Future<List<PasswordModel>> getAllPasswords() async {
     final result = await database.query('passwords');
