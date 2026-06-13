@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:save_pass/src/controller/sqlite_password_controller.dart';
@@ -28,7 +30,7 @@ class _HomePageState extends State<HomePage> {
   Widget header(BuildContext context) {
     // Escuta as alterações no controller do provider
     final controller = context.watch<SQlitePasswordController>();
-
+    log('Perfil salvo: ${controller.profile}');
     // Obtém o nome cadastrado ou exibe o padrão "Usuário"
     final String username =
         (controller.profile != null && controller.profile!.username.isNotEmpty)
