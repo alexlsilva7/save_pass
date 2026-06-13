@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:save_pass/src/model/password_model.dart';
+import 'package:save_pass/src/model/user_profile_model.dart'; // Importação do modelo de perfil
 import 'package:save_pass/src/model/repository/sqlite_password_respository.dart';
 
 class SQlitePasswordController extends ChangeNotifier {
@@ -7,11 +8,20 @@ class SQlitePasswordController extends ChangeNotifier {
   final List<PasswordModel> _passwords = [];
   List<PasswordModel> filteredPasswords = [];
 
+  UserProfileModel? _profile;
+  UserProfileModel? get profile => _profile;
+
   SQlitePasswordController() {
     SQlitePasswordRepository.open().then((database) {
       _passwordRepository = SQlitePasswordRepository(database);
+
       _passwordRepository.getAllPasswords().then((passwords) {
         _passwords.addAll(passwords);
+        notifyListeners();
+      });
+
+      _passwordRepository.getProfile().then((profile) {
+        _profile = profile;
         notifyListeners();
       });
     });
@@ -59,10 +69,18 @@ class SQlitePasswordController extends ChangeNotifier {
 
   void search(String serviceName) {
     filteredPasswords = _passwords
-        .where((password) => password.serviceName
-            .toLowerCase()
-            .contains(serviceName.toLowerCase()))
+        .where(
+          (password) => password.serviceName.toLowerCase().contains(
+            serviceName.toLowerCase(),
+          ),
+        )
         .toList();
+    notifyListeners();
+  }
+
+  Future<void> saveProfile(UserProfileModel profile) async {
+    await _passwordRepository.saveProfile(profile);
+    _profile = profile;
     notifyListeners();
   }
 }

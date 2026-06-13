@@ -28,7 +28,7 @@ class _SplashPageState extends State<SplashPage>
     );
     _animationController.forward();
     Future.delayed(const Duration(seconds: 2), () async {
-      _animationController.reverse().then((value) => openLoginPage());
+      _animationController.reverse().then((value) => openHomePage());
     });
 
     super.initState();
@@ -40,8 +40,8 @@ class _SplashPageState extends State<SplashPage>
     super.dispose();
   }
 
-  void openLoginPage() {
-    Navigator.pushReplacementNamed(context, '/login');
+  void openHomePage() {
+    Navigator.pushReplacementNamed(context, '/home');
   }
 
   @override

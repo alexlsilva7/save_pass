@@ -26,6 +26,20 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget header(BuildContext context) {
+    // Escuta as alterações no controller do provider
+    final controller = context.watch<SQlitePasswordController>();
+
+    // Obtém o nome cadastrado ou exibe o padrão "Usuário"
+    final String username =
+        (controller.profile != null && controller.profile!.username.isNotEmpty)
+        ? controller.profile!.username
+        : 'Usuário';
+
+    // Obtém as iniciais do nome ou exibe "AL" por padrão
+    final String initials = username.length >= 2
+        ? username.substring(0, 2).toUpperCase()
+        : 'US';
+
     return SizedBox(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -34,14 +48,14 @@ class _HomePageState extends State<HomePage> {
             children: [
               Container(
                 decoration: const BoxDecoration(
-                  color: AppColors.black900,
+                  color: AppColors.black800,
                   borderRadius: BorderRadius.all(Radius.circular(8)),
                 ),
                 width: 48,
                 height: 48,
                 child: Center(
                   child: Text(
-                    "AL",
+                    initials,
                     style: AppTextStyle.headline6.copyWith(
                       color: AppColors.primary,
                     ),
@@ -57,10 +71,7 @@ class _HomePageState extends State<HomePage> {
                       text: 'Olá, ',
                       style: AppTextStyle.headline5,
                       children: [
-                        TextSpan(
-                          text: 'Usuário',
-                          style: AppTextStyle.headline4,
-                        ),
+                        TextSpan(text: username, style: AppTextStyle.headline4),
                       ],
                     ),
                   ),

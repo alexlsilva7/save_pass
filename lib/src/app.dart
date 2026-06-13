@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:save_pass/src/controller/sqlite_password_controller.dart';
 import 'package:save_pass/src/model/password_model.dart';
 import 'package:save_pass/src/view/home/home_page.dart';
-import 'package:save_pass/src/view/login/login_page.dart';
 import 'package:save_pass/src/view/new_password_page/new_password_page.dart';
 import 'package:save_pass/src/view/splash/splash_page.dart';
 import 'package:save_pass/ui/theme.dart';
@@ -48,10 +47,6 @@ class App extends StatelessWidget {
                           ? settings.arguments as PasswordModel
                           : null,
                     ),
-                  );
-                case '/login':
-                  return MaterialPageRoute(
-                    builder: (context) => const LoginPage(),
                   );
                 default:
                   return MaterialPageRoute(
