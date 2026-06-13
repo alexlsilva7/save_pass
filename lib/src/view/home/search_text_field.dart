@@ -48,7 +48,7 @@ class SearchTextField extends StatelessWidget {
                 size: 24,
               ),
             ),
-          )
+          ),
         ],
       ),
     );

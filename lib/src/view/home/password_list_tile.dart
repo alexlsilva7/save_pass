@@ -7,9 +7,9 @@ import 'package:save_pass/ui/text_styles.dart';
 import 'package:provider/provider.dart';
 
 class PasswordListTile extends StatefulWidget {
-  PasswordListTile({super.key, required this.passwordService});
+  const PasswordListTile({super.key, required this.passwordModel});
 
-  PasswordModel passwordService;
+  final PasswordModel passwordModel;
   @override
   State<PasswordListTile> createState() => _PasswordListTileState();
 }
@@ -20,11 +20,13 @@ class _PasswordListTileState extends State<PasswordListTile> {
   late final String password;
   late final String service;
 
+  late PasswordModel passwordModel = widget.passwordModel;
+
   @override
   void initState() {
-    username = widget.passwordService.username;
-    password = widget.passwordService.password;
-    service = widget.passwordService.serviceName;
+    username = widget.passwordModel.username;
+    password = widget.passwordModel.password;
+    service = widget.passwordModel.serviceName;
     super.initState();
   }
 
@@ -41,16 +43,18 @@ class _PasswordListTileState extends State<PasswordListTile> {
               color: Colors.amber,
               onTap: (handler) async {
                 await handler(false); // To close the cell
-                Navigator.pushNamed(context, '/new_password',
-                        arguments: widget.passwordService)
-                    .then((value) {
+                Navigator.pushNamed(
+                  context,
+                  '/new_password',
+                  arguments: widget.passwordModel,
+                ).then((value) {
                   if (value != null) {
                     final newPassword = value as PasswordModel;
                     setState(() {
                       username = newPassword.username;
                       password = newPassword.password;
                       service = newPassword.serviceName;
-                      widget.passwordService = newPassword;
+                      passwordModel = newPassword;
                     });
                   }
                 });
@@ -62,15 +66,17 @@ class _PasswordListTileState extends State<PasswordListTile> {
               title: 'Delete',
               onTap: (CompletionHandler handler) async {
                 await handler(true);
-                context
-                    .read<SQlitePasswordController>()
-                    .deletePassword(widget.passwordService);
+                await context.read<SQlitePasswordController>().deletePassword(
+                  passwordModel,
+                );
                 setState(() {});
               },
               color: AppColors.red,
               backgroundRadius: 5,
-              nestedAction:
-                  SwipeNestedAction(title: 'Confirm?', nestedWidth: 130),
+              nestedAction: SwipeNestedAction(
+                title: 'Confirm?',
+                nestedWidth: 130,
+              ),
             ),
           ],
           child: Container(
@@ -81,21 +87,20 @@ class _PasswordListTileState extends State<PasswordListTile> {
                       begin: Alignment.centerLeft,
                       end: Alignment.centerRight,
                       colors: [
-                        AppColors.primary.withOpacity(0.2),
+                        AppColors.primary.withValues(alpha: 0.2),
                         AppColors.black800,
                       ],
                     )
                   : null,
-              borderRadius: const BorderRadius.all(
-                Radius.circular(4),
-              ),
+              borderRadius: const BorderRadius.all(Radius.circular(4)),
             ),
             child: ListTile(
               leading: IconButton(
                 icon: Icon(
                   isPasswordVisible ? Icons.visibility : Icons.visibility_off,
-                  color:
-                      isPasswordVisible ? AppColors.primary : AppColors.gray500,
+                  color: isPasswordVisible
+                      ? AppColors.primary
+                      : AppColors.gray500,
                 ),
                 onPressed: () {
                   setState(() {
@@ -105,8 +110,9 @@ class _PasswordListTileState extends State<PasswordListTile> {
               ),
               title: AnimatedDefaultTextStyle(
                 style: AppTextStyle.bodyText1.copyWith(
-                  color:
-                      isPasswordVisible ? AppColors.gray200 : AppColors.white,
+                  color: isPasswordVisible
+                      ? AppColors.gray200
+                      : AppColors.white,
                   fontSize: isPasswordVisible ? 14 : 16,
                 ),
                 duration: const Duration(milliseconds: 300),
@@ -114,19 +120,18 @@ class _PasswordListTileState extends State<PasswordListTile> {
               ),
               subtitle: AnimatedDefaultTextStyle(
                 style: AppTextStyle.subtitle2.copyWith(
-                  color:
-                      isPasswordVisible ? AppColors.primary : AppColors.gray500,
+                  color: isPasswordVisible
+                      ? AppColors.primary
+                      : AppColors.gray500,
                   fontSize: isPasswordVisible ? 16 : 14,
                 ),
                 duration: const Duration(milliseconds: 300),
-                child: Text(
-                  isPasswordVisible ? password : username,
-                ),
+                child: Text(isPasswordVisible ? password : username),
               ),
             ),
           ),
         ),
-        const SizedBox(height: 8)
+        const SizedBox(height: 8),
       ],
     );
   }

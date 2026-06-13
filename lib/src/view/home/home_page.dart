@@ -19,15 +19,8 @@ class _HomePageState extends State<HomePage> {
   Widget background() {
     return Column(
       children: [
-        Container(
-          color: AppColors.primary,
-          height: 155,
-        ),
-        Expanded(
-          child: Container(
-            color: AppColors.black900,
-          ),
-        ),
+        Container(color: AppColors.primary, height: 155),
+        Expanded(child: Container(color: AppColors.black900)),
       ],
     );
   }
@@ -42,17 +35,16 @@ class _HomePageState extends State<HomePage> {
               Container(
                 decoration: const BoxDecoration(
                   color: AppColors.black900,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(8),
-                  ),
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
                 ),
                 width: 48,
                 height: 48,
                 child: Center(
                   child: Text(
                     "AL",
-                    style: AppTextStyle.headline6
-                        .copyWith(color: AppColors.primary),
+                    style: AppTextStyle.headline6.copyWith(
+                      color: AppColors.primary,
+                    ),
                   ),
                 ),
               ),
@@ -66,7 +58,9 @@ class _HomePageState extends State<HomePage> {
                       style: AppTextStyle.headline5,
                       children: [
                         TextSpan(
-                            text: 'Alex Lopes', style: AppTextStyle.headline4),
+                          text: 'Usuário',
+                          style: AppTextStyle.headline4,
+                        ),
                       ],
                     ),
                   ),
@@ -101,65 +95,65 @@ class _HomePageState extends State<HomePage> {
         children: [
           background(),
           Consumer<SQlitePasswordController>(
-              builder: (context, SQlitePasswordController controller, _) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 48),
-                  header(context),
-                  const SizedBox(height: 24),
-                  SearchTextField(
-                    hintText: 'Qual senha você procura?',
-                    controller: _searchController,
-                    onChanged: (value) {
-                      setState(() {
-                        controller.search(value);
-                      });
-                    },
-                  ),
-                  const SizedBox(height: 24),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Suas senhas',
-                        style: AppTextStyle.headline5,
-                      ),
-                      Text('${controller.passwords.length} senhas',
+            builder: (context, SQlitePasswordController controller, _) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 48),
+                    header(context),
+                    const SizedBox(height: 24),
+                    SearchTextField(
+                      hintText: 'Qual senha você procura?',
+                      controller: _searchController,
+                      onChanged: (value) {
+                        setState(() {
+                          controller.search(value);
+                        });
+                      },
+                    ),
+                    const SizedBox(height: 24),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Suas senhas', style: AppTextStyle.headline5),
+                        Text(
+                          '${controller.passwords.length} senhas',
                           style: AppTextStyle.bodyText2.copyWith(
                             color: AppColors.gray500,
-                          )),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  Expanded(
-                    child: _searchController.text.isNotEmpty
-                        ? ListView.builder(
-                            padding: EdgeInsets.zero,
-                            itemCount: controller.filteredPasswords.length,
-                            itemBuilder: (context, index) {
-                              return PasswordListTile(
-                                passwordService:
-                                    controller.filteredPasswords[index],
-                              );
-                            },
-                          )
-                        : ListView.builder(
-                            padding: EdgeInsets.zero,
-                            itemCount: controller.passwords.length,
-                            itemBuilder: (context, index) {
-                              return PasswordListTile(
-                                passwordService: controller.passwords[index],
-                              );
-                            },
                           ),
-                  ),
-                ],
-              ),
-            );
-          })
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    Expanded(
+                      child: _searchController.text.isNotEmpty
+                          ? ListView.builder(
+                              padding: EdgeInsets.zero,
+                              itemCount: controller.filteredPasswords.length,
+                              itemBuilder: (context, index) {
+                                return PasswordListTile(
+                                  passwordModel:
+                                      controller.filteredPasswords[index],
+                                );
+                              },
+                            )
+                          : ListView.builder(
+                              padding: EdgeInsets.zero,
+                              itemCount: controller.passwords.length,
+                              itemBuilder: (context, index) {
+                                return PasswordListTile(
+                                  passwordModel: controller.passwords[index],
+                                );
+                              },
+                            ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
         ],
       ),
     );

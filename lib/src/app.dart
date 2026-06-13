@@ -18,52 +18,50 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DevicePreview(
-      enabled: !kReleaseMode,
-      tools: const [
-        ...DevicePreview.defaultTools,
-        DevicePreviewScreenshot(),
-      ],
+      //? habilitar o DevicePreview se quiser testar a responsividade do app.
+      enabled: false,
+      tools: const [...DevicePreview.defaultTools, DevicePreviewScreenshot()],
       builder: (context) => MultiProvider(
-          providers: [
-            ChangeNotifierProvider(
-              create: (context) => SQlitePasswordController(),
-            ),
-          ],
-          builder: (context, _) {
-            return MaterialApp(
-              title: 'Save Pass',
-              debugShowCheckedModeBanner: false,
-              useInheritedMediaQuery: true,
-              locale: DevicePreview.locale(context),
-              builder: DevicePreview.appBuilder,
-              theme: AppTheme.dark,
-              home: const SplashPage(),
-              onGenerateRoute: (settings) {
-                switch (settings.name) {
-                  case '/home':
-                    return MaterialPageRoute(
-                      builder: (context) => const HomePage(),
-                    );
-                  case '/new_password':
-                    return MaterialPageRoute(
-                      builder: (context) => NewPasswordPage(
-                        passwordModel: settings.arguments != null
-                            ? settings.arguments as PasswordModel
-                            : null,
-                      ),
-                    );
-                  case '/login':
-                    return MaterialPageRoute(
-                      builder: (context) => const LoginPage(),
-                    );
-                  default:
-                    return MaterialPageRoute(
-                      builder: (context) => const SplashPage(),
-                    );
-                }
-              },
-            );
-          }),
+        providers: [
+          ChangeNotifierProvider(
+            create: (context) => SQlitePasswordController(),
+          ),
+        ],
+        builder: (context, _) {
+          return MaterialApp(
+            title: 'Save Pass',
+            debugShowCheckedModeBanner: false,
+            locale: DevicePreview.locale(context),
+            builder: DevicePreview.appBuilder,
+            theme: AppTheme.dark,
+            home: const SplashPage(),
+            onGenerateRoute: (settings) {
+              switch (settings.name) {
+                case '/home':
+                  return MaterialPageRoute(
+                    builder: (context) => const HomePage(),
+                  );
+                case '/new_password':
+                  return MaterialPageRoute(
+                    builder: (context) => NewPasswordPage(
+                      passwordModel: settings.arguments != null
+                          ? settings.arguments as PasswordModel
+                          : null,
+                    ),
+                  );
+                case '/login':
+                  return MaterialPageRoute(
+                    builder: (context) => const LoginPage(),
+                  );
+                default:
+                  return MaterialPageRoute(
+                    builder: (context) => const SplashPage(),
+                  );
+              }
+            },
+          );
+        },
+      ),
     );
   }
 }
